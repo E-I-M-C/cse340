@@ -4,3 +4,209 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --highlight-color: #34a1cc;
+  --secondary-color: #333;
+  --heading-font: Arial, Helvetica, sans-serif;
+  --body-font: 'Times New Roman', Times, serif;
+}
+
+body {
+  font-family: var(--body-font);
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-family: var(--heading-font);
+}
+
+.siteName a {
+  color: #000;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#tools a {
+  color: #000;
+  text-decoration: none;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  background-color: var(--secondary-color);
+  list-style: none;
+  font-family: var(--heading-font);
+}
+
+nav li {
+  padding: 0.5rem;
+  color: #fff;
+}
+
+.delorean-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 2rem;
+}
+
+.delorean-grid img {
+  margin: auto;
+  grid-column: 1/4;
+  grid-row: 1/2;
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+}
+
+.delorean-grid div {
+  display: inline;
+  margin: 1rem auto auto 1rem;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  background-color: #ffffffaa;
+  color: var(--highlight-color);
+}
+
+.delorean-grid h3 {
+  margin: auto;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.delorean-grid ul {
+  margin: auto;
+  padding: 0;
+  list-style: none;
+  font-size: 1.25rem;
+}
+
+.delorean-grid a {
+  display: inline-block;
+  margin: 1rem auto auto auto;
+  padding: 0.5rem 1rem;
+  color: #000;
+  background-color: var(--highlight-color);
+  text-decoration: none;
+  text-align: center;
+  align-self: center;
+  font-size: 1rem;
+  font-family: var(--heading-font);
+  box-shadow: 1px 1px 5px 1px var(--secondary-color);
+}
+
+.reviews ul {
+  padding-left: 1.5rem;
+}
+
+.reviews li {
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: baseline;
+  text-align: center;
+  column-gap: 0.5rem;
+  row-gap: 1.5rem;
+}
+
+.upgrades-image {
+  height: 90px;
+  background-color: var(--highlight-color);
+  border: 1px solid var(--secondary-color);
+  align-content: center;
+}
+
+.upgrades-grid img {
+  display: block;
+  margin: auto;
+}
+
+footer {
+  margin-top: 2rem;
+  font-family: var(--heading-font);
+}
+
+footer p {
+  margin: auto;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  body {
+    padding: 0.5rem;
+    background-image: url("/images/site/small_check.jpg");
+  }
+  
+  #wrapper {
+    margin: auto auto;
+    max-width: 750px;
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 5px solid var(--highlight-color);
+    border-radius: 10px;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+  }
+
+  main h1 {
+    grid-column: 1/3;
+  }
+
+  .delorean-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 1/3;
+  }
+
+  .delorean-grid div {
+    margin: auto 0 auto auto;
+  }
+
+  .delorean-grid h3 {
+    font-size: 1.75rem;
+  }
+  
+  .delorean-grid ul {
+    font-size: 1.5rem;
+  }
+  
+  .delorean-grid a {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  section h2 {
+    margin-bottom: 3rem;
+  }
+
+  .reviews {
+    grid-column: 2/3;
+    grid-row: 3/4;
+  }
+
+  .reviews ul {
+    padding-left: 1rem;
+  }
+
+  .upgrades {
+    grid-column: 1/2;
+    grid-row: 3/4;
+  }
+
+  footer {
+    margin-top: 3rem;
+  }
+}
