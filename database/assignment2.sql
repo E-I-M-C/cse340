@@ -33,6 +33,7 @@ FROM public.inventory
     ON public.inventory.classification_id = public.classification.classification_id
 WHERE public.classification.classification_name = 'Sport';
 
--- Modify inv_image of all data entries
+-- Modify inv_image & inv_thumbnail of all data entries
 UPDATE public.inventory
-SET inv_image = REPLACE(inv_image, 'images', 'images/vehicles');
+SET inv_image = REPLACE(inv_image, 'images', 'images/vehicles'),
+  inv_thumbnail = REPLACE(inv_thumbnail, 'images', 'images/vehicles');
