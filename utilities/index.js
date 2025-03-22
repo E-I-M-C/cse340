@@ -57,6 +57,25 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the item view HTML
+* ************************************ */
+Util.buildItemView = async function(data){
+  const details = data[0]
+  return `<div id="details-img">
+    <img src="${details.inv_image}" alt="Image of ${details.inv_make} ${details.inv_model} on CSE Motors"/>
+  </div>
+  <section id="details">
+    <h3>${details.inv_make} ${details.inv_model} Details</h3>
+    <ul>
+      <li><span>Price:</span> <span id="price">$${new Intl.NumberFormat('en-US').format(details.inv_price)}</span></li>
+      <li><span>Description:</span> ${details.inv_description}</li>
+      <li><span>Color:</span> ${details.inv_color}</li>
+      <li><span>Miles:</span> ${new Intl.NumberFormat('en-US').format(details.inv_miles)}</li>
+    </ul>
+  </section>`
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
