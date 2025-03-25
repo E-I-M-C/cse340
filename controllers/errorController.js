@@ -1,4 +1,3 @@
-const utilities = require("../utilities/")
 const errorController = {}
 
 errorController.runError = async function(req, res){
