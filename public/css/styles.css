@@ -249,7 +249,7 @@ main h1 {
 .form-generic input[type=email],
 .form-generic input[type=password] {
   display: block;
-  margin: 0.5rem auto;
+  margin: 0.5rem 0;
   padding: 0.5rem;
   width: 100%;
   box-sizing: border-box;
