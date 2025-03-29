@@ -17,8 +17,9 @@
 <form class="form-generic" id="inventoryForm" action="/inv/add-vehicle" method="post">
   <span class="form-details">ALL FIELDS ARE REQUIRED.</span>
 
-  <label for="classification_id">Classification:</label>
-  <%- select %>
+  <label for="classification_id">Classification:
+    <%- select %>
+  </label>
 
   <label for="inv_make">Make:</label>
   <input type="text" name="inv_make" id="inv_make" pattern="[a-zA-Z]{3,}" placeholder="Min of 3 characters" required value="<%= locals.inv_make %>">

@@ -314,10 +314,6 @@ input:focus:invalid {
   width: 150px;
 }
 
-#classificationForm span:last-of-type {
-  margin: 1rem 0;
-}
-
 .form-details {
   display: block;
   margin-bottom: 0.5rem;
