@@ -1,0 +1,51 @@
+<%# If there's a title make an h1 element that has the title,
+ else redirect to default index route %>
+ <% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form class="form-generic" id="inventoryForm" action="/inv/add-vehicle" method="post">
+  <span class="form-details">ALL FIELDS ARE REQUIRED.</span>
+
+  <label for="classification_id">Classification:</label>
+  <%- select %>
+
+  <label for="inv_make">Make:</label>
+  <input type="text" name="inv_make" id="inv_make" pattern="[a-zA-Z]{3,}" placeholder="Min of 3 characters" required value="<%= locals.inv_make %>">
+
+  <label for="inv_model">Model:</label>
+  <input type="text" name="inv_model" id="inv_model" pattern="[a-zA-Z]{3,}" placeholder="Min of 3 characters" required value="<%= locals.inv_model %>">
+
+  <label for="inv_description">Description:</label>
+  <textarea name="inv_description" id="inv_description" required><% if (locals.inv_description) { %><%= locals.inv_description %><% } else {%><%= "This is a car." %><% } %></textarea>
+
+  <label for="inv_image">Image Path:</label>
+  <input type="text" name="inv_image" id="inv_image" required value="<% if (locals.inv_image) { %><%= locals.inv_image %><% } else {%><%= "/images/vehicles/no-image.png" %><% } %>">
+
+  <label for="inv_thumbnail">Thumbnail Path:</label>
+  <input type="text" name="inv_thumbnail" id="inv_thumbnail" required value="<% if (locals.inv_thumbnail) { %><%= locals.inv_thumbnail %><% } else {%><%= "/images/vehicles/no-image-tn.png" %><% } %>">
+
+  <label for="inv_price">Price:</label>
+  <input type="text" name="inv_price" id="inv_price" placeholder="Decimal or integer" pattern="[0-9.]{1,}" required value="<%= locals.inv_price %>">
+
+  <label for="inv_year">Year:</label>
+  <input type="text" name="inv_year" id="inv_year" placeholder="4-digit year" pattern="[0-9]{4}" required value="<%= locals.inv_year %>">
+
+  <label for="inv_miles">Miles:</label>
+  <input type="text" name="inv_miles" id="inv_miles" placeholder="Digits only" pattern="[0-9]{1,}" required value="<%= locals.inv_miles %>">
+
+  <label for="inv_color">Color:</label>
+  <input type="text" name="inv_color" id="inv_color" required value="<%= locals.inv_color %>">
+
+  <input type="submit" value="Add Vehicle">
+</form>

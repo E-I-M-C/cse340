@@ -1,0 +1,24 @@
+<%# If there's a title make an h1 element that has the title,
+ else redirect to default index route %>
+ <% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form class="form-generic" id="classificationForm" action="/inv/add-classification" method="post">
+  <span class="form-details">FIELD IS REQUIRED.</span>
+  <label for="classification_name">Classification Name:</label>
+  <span class="form-details">NAME MUST BE ALPHABETIC CHARACTERS ONLY.</span>
+  <input type="text" name="classification_name" pattern="[a-zA-Z]{1,}" required>
+
+  <input type="submit" value="Add Classification">
+</form>

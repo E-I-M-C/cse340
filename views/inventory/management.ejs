@@ -1,0 +1,22 @@
+<%# If there's a title make an h1 element that has the title,
+ else redirect to default index route %>
+ <% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<div class="management">
+  <a href="/inv/add-classification">Add New Classification</a>
+  <a href="/inv/add-vehicle">Add New Vehicle</a>
+</div>

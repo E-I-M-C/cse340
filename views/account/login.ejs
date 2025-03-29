@@ -8,7 +8,15 @@
 
 <%- messages() %>
 
-<form class="form-generic form-login" method="post">
+<% if (errors) { %>
+  <ul class="notice">
+      <% errors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+      <% }) %>
+  </ul>
+<% } %>
+
+<form class="form-generic" id="loginForm" action="/account/login" method="post">
   <label for="account_email">Email:</label>
   <input type="email" name="account_email" required placeholder="Enter a valid email address">
   <label for="account_password">Password:</label>
