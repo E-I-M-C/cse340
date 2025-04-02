@@ -14,7 +14,7 @@
   </ul>
 <% } %>
 
-<form class="form-generic" id="inventoryForm" action="/inv/newVehicle" method="post">
+<form class="form-generic" id="updateForm" action="/inv/update" method="post">
   <span class="form-details">ALL FIELDS ARE REQUIRED.</span>
 
   <label for="classification_id">Classification:
@@ -48,5 +48,9 @@
   <label for="inv_color">Color:</label>
   <input type="text" name="inv_color" id="inv_color" required value="<%= locals.inv_color %>">
 
-  <input type="submit" value="Add Vehicle">
+  <input type="submit" value="Update Vehicle" disabled>
+
+  <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"<% } %>>
 </form>
+
+<script src="../../js/inv-update.js"></script>

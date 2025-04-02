@@ -314,21 +314,38 @@ input:focus:invalid {
   width: 150px;
 }
 
+#updateForm input[type=submit] {
+  width: 150px;
+}
+
 .form-details {
   display: block;
   margin-bottom: 0.5rem;
   font-style: italic;
 }
 
-.management {
+div.links {
   margin: 0;
   padding: 0 2rem;
 }
 
-.management a {
+div.links a {
   display: block;
   padding: 0.1rem 0;
   font-family: var(--heading-font);
+}
+
+p.management {
+  margin: 0 0 1rem 0;
+}
+
+div.management select {
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+table.management {
+  margin: 0.5rem auto auto 0;
 }
 
 #messages {
