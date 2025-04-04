@@ -15,13 +15,13 @@ router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByI
 // Route to build management view
 router.get("/",
   utilities.checkAccountType,
-  utilities.handleErrors(invController.buildManagement)
+  utilities.handleErrors(invController.managementView)
 )
 
 // Route to build add classification view
 router.get("/newClassification",
   utilities.checkAccountType,
-  utilities.handleErrors(invController.buildNewClassification)
+  utilities.handleErrors(invController.newClassificationView)
 )
 
 // Process the added classification data
@@ -35,7 +35,7 @@ router.post(
 // Route to build add inventory view
 router.get("/newVehicle",
   utilities.checkAccountType,
-  utilities.handleErrors(invController.buildNewVehicle)
+  utilities.handleErrors(invController.newVehicleView)
 )
 
 // Process the added inventory data
@@ -52,7 +52,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to build edit view
 router.get("/edit/:inv_id",
   utilities.checkAccountType,
-  utilities.handleErrors(invController.buildEditView)
+  utilities.handleErrors(invController.editView)
 )
 
 // Process the edited inventory data
@@ -61,6 +61,18 @@ router.post(
   invValidate.newInventoryRules(),
   invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
+)
+
+// Route to build delete view
+router.get("/delete/:inv_id",
+  utilities.checkAccountType,
+  utilities.handleErrors(invController.deleteView)
+)
+
+// Delete inventory item
+router.post(
+  "/delete",
+  utilities.handleErrors(invController.deleteItem)
 )
 
 module.exports = router;

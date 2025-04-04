@@ -314,7 +314,8 @@ input:focus:invalid {
   width: 150px;
 }
 
-#updateForm input[type=submit] {
+#updateForm input[type=submit],
+#deleteForm input[type=submit] {
   width: 150px;
 }
 
