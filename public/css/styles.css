@@ -45,6 +45,7 @@ nav ul {
 }
 
 nav li {
+  margin: auto;
   padding: 0.5rem 0;
 }
 
@@ -315,7 +316,8 @@ input:focus:invalid {
 }
 
 #updateForm input[type=submit],
-#deleteForm input[type=submit] {
+#deleteForm input[type=submit],
+#updatepsswrdForm input[type=submit] {
   width: 150px;
 }
 
@@ -360,6 +362,11 @@ table.management {
   font-style: italic;
 }
 
+.kudos {
+  list-style: none;
+  background-color: #afa;
+}
+
 #error-message {
   padding: 1.5rem 0.5rem;
   height: 400px;
@@ -394,10 +401,6 @@ footer p {
     background-color: #fff;
     border: 5px solid var(--highlight-color);
     border-radius: 10px;
-  }
-
-  nav li {
-    padding: 0.5rem;
   }
 
   nav li a {

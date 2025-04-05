@@ -12,10 +12,12 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,
+    account,
   })
 }
 
@@ -29,10 +31,12 @@ invCont.buildByInventoryId = async function (req, res, next) {
   let nav = await utilities.getNav()
   const itemYear = data[0].inv_year
   const itemName = `${data[0].inv_make} ${data[0].inv_model}`
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/item", {
     title: `${itemYear} ${itemName}`,
     nav,
     details,
+    account,
   })
 }
 
@@ -42,11 +46,13 @@ invCont.buildByInventoryId = async function (req, res, next) {
 invCont.managementView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const classificationSelect = await utilities.buildClassificationList()
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/management", {
     title: "Vehicle Managment",
     nav,
     classificationSelect, 
     errors: null,
+    account,
   })
 }
 
@@ -55,10 +61,12 @@ invCont.managementView = async function (req, res, next) {
  * ************************** */
 invCont.newClassificationView = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/add-classification", {
     title: "Add New Classification",
     nav,
     errors: null,
+    account,
   })
 }
 
@@ -70,6 +78,7 @@ invCont.addClassification = async function (req, res, next) {
 
   const addResult = await invModel.addClassification(classification_name)
   let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
 
   if (addResult) {
     req.flash(
@@ -80,12 +89,14 @@ invCont.addClassification = async function (req, res, next) {
       title: "Vehicle Managment",
       nav,
       errors: null,
+      account,
     })
   } else {
     req.flash("notice", "Sorry, the classification was not added.")
     res.status(501).render("./inventory/add-classification", {
       title: "Add New Classification",
       nav,
+      account,
     })
   }
 }
@@ -96,11 +107,13 @@ invCont.addClassification = async function (req, res, next) {
 invCont.newVehicleView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const classificationSelect = await utilities.buildClassificationList()
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/add-inventory", {
     title: "Add New Vehicle",
     nav,
     classificationSelect,
     errors: null,
+    account,
   })
 }
 
@@ -112,6 +125,7 @@ invCont.addInventory = async function (req, res, next) {
 
   const addResult = await invModel.addInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
   let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
 
   if (addResult) {
     req.flash(
@@ -122,12 +136,14 @@ invCont.addInventory = async function (req, res, next) {
       title: "Vehicle Managment",
       nav,
       errors: null,
+      account,
     })
   } else {
     req.flash("notice", "Sorry, the vehicle was not added.")
     res.status(501).render("./inventory/add-inventory", {
       title: "Add New Vehicle",
       nav,
+      account,
     })
   }
 }
@@ -150,9 +166,9 @@ invCont.editView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const itemDataArray = await invModel.getItemByInventoryId(inv_id)
   const itemData = itemDataArray[0]
-  console.log(itemData)
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
@@ -168,7 +184,8 @@ invCont.editView = async function (req, res, next) {
     inv_price: itemData.inv_price,
     inv_miles: itemData.inv_miles,
     inv_color: itemData.inv_color,
-    classification_id: itemData.classification_id
+    classification_id: itemData.classification_id,
+    account
   })
 }
 
@@ -177,6 +194,7 @@ invCont.editView = async function (req, res, next) {
  * ************************** */
 invCont.updateInventory = async function (req, res, next) {
   let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
   const {
     inv_id,
     inv_make,
@@ -213,21 +231,22 @@ invCont.updateInventory = async function (req, res, next) {
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the insert failed.")
     res.status(501).render("inventory/edit-inventory", {
-    title: "Edit " + itemName,
-    nav,
-    classificationSelect: classificationSelect,
-    errors: null,
-    inv_id,
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-    classification_id
+      title: "Edit " + itemName,
+      nav,
+      classificationSelect: classificationSelect,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+      account
     })
   }
 }
@@ -240,6 +259,7 @@ invCont.deleteView = async function (req, res, next) {
   console.log(itemData)
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  let account = utilities.buildAccountButton(res)
   res.render("./inventory/delete-confirm", {
     title: "Delete " + itemName,
     nav,
@@ -249,7 +269,8 @@ invCont.deleteView = async function (req, res, next) {
     inv_make: itemData.inv_make,
     inv_model: itemData.inv_model,
     inv_year: itemData.inv_year,
-    inv_price: itemData.inv_price
+    inv_price: itemData.inv_price,
+    account
   })
 }
 
@@ -257,7 +278,6 @@ invCont.deleteView = async function (req, res, next) {
  *  Delete Inventory Item
  * ************************** */
 invCont.deleteItem = async function (req, res, next) {
-  let nav = await utilities.getNav()
   const inv_id = parseInt(req.body.inv_id)
 
   const deleteResult = await invModel.deleteInventoryItem( inv_id )

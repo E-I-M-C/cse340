@@ -1,13 +1,12 @@
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const invModel = require("../models/inventory-model")
-const { body, validationResult } = require("express-validator")
 const Util = {}
 
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function () {
   let data = await invModel.getClassifications()
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
@@ -151,12 +150,24 @@ Util.checkAccountType = (req, res, next) => {
     if (res.locals.accountData.account_type.toLowerCase() == "admin" || res.locals.accountData.account_type.toLowerCase() == "employee") {
       next()
     } else {
-      req.flash("notice", "Access Denied.")
-      return res.redirect("/")
+      req.flash("notice", "Please log in with an account with higher permissions to access that page.")
+      return res.redirect("/account/login")
     }
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
+  }
+}
+
+/* ****************************************
+ *  Return appropriate account button
+ * ************************************ */
+Util.buildAccountButton = (res) => {
+  if (res.locals.loggedin) {
+    return `<a title="Click to " href="/account">Welcome ${res.locals.accountData.account_firstname}</a>
+      <a title="Click to logout" href="/account/logout">Logout</a>`
+  } else {
+    return `<a title="Click to log in" href="/account/login">My Account</a>`
   }
 }
 
