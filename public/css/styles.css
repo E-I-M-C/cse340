@@ -301,14 +301,13 @@ input:focus:invalid {
 
 #loginForm p {
   margin: 0.8rem auto 0 auto;
-  color: #fff;
   font-family: var(--heading-font);
   font-size: 1.2rem;
   text-align: center;
 }
 
 #loginForm p a {
-  color: #fff;
+  color: #000;
 }
 
 #classificationForm input[type=submit] {
