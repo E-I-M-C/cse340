@@ -39,10 +39,20 @@ router.get(
 )
 
 // Process the updated account data
-router.post("/update/info", utilities.handleErrors(accountController.updateAccount))
+router.post(
+  "/update/info",
+  accountValidate.infoRules(),
+  accountValidate.checkInfoData,
+  utilities.handleErrors(accountController.updateAccount)
+)
 
 // Process the changed password
-router.post("/update/password", utilities.handleErrors(accountController.changePassword))
+router.post(
+  "/update/password",
+  accountValidate.passwordRules(),
+  accountValidate.checkPasswordData,
+  utilities.handleErrors(accountController.changePassword)
+)
 
 // Route to build account logout view
 router.get("/logout", utilities.handleErrors(accountController.accountLogout))
