@@ -134,8 +134,13 @@ validate.checkLoginData = async (req, res, next) => {
 /*  **********************************
   *  Change Account Data Validation Rules
   * ********************************* */
-validate.infoRules = () => {
+validate.infoRules = (req, res) => {
   return [
+    // id is required
+    body("account_id")
+      .trim()
+      .notEmpty(),
+
     // firstname is required and must be string
     body("account_firstname")
       .trim()
@@ -174,7 +179,7 @@ validate.checkInfoData = async (req, res, next) => {
   const { account_id, account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
-  if (!errors.isEmpty()) {
+  if (!errors.isEmpty() || account_id != res.locals.accountData.account_id) {
     let nav = await utilities.getNav()
     let account = utilities.buildAccountButton(res)
     res.render("account/update-account", {
@@ -195,8 +200,13 @@ validate.checkInfoData = async (req, res, next) => {
 /*  **********************************
   *  Change Password Validation Rules
   * ********************************* */
-validate.passwordRules = () => {
+validate.passwordRules = (req, res) => {
   return [
+    // id is required
+    body("account_id")
+      .trim()
+      .notEmpty(),
+
     // password is required and must be strong password
     body("account_password")
       .trim()
@@ -219,7 +229,7 @@ validate.checkPasswordData = async (req, res, next) => {
   const { account_id } = req.body
   let errors = []
   errors = validationResult(req)
-  if (!errors.isEmpty()) {
+  if (!errors.isEmpty() || account_id != res.locals.accountData.account_id) {
     let nav = await utilities.getNav()
     let account = utilities.buildAccountButton(res)
     const accountData = await accountModel.getAccountById(account_id)
@@ -231,6 +241,31 @@ validate.checkPasswordData = async (req, res, next) => {
       account_firstname: accountData.account_firstname,
       account_lastname: accountData.account_lastname,
       account_email: accountData.account_email,
+      account,
+    })
+    return
+  }
+  next()
+}
+
+/* ******************************
+ * Check data and return errors or continue to home
+ * ***************************** */
+validate.checkAccountDeleteData = async (req, res, next) => {
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty() || account_id != res.locals.accountData.account_id) {
+    let nav = await utilities.getNav()
+    let account = utilities.buildAccountButton(res)
+    res.render("account/delete-account", {
+      errors,
+      title: "Delete Account",
+      nav,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
       account,
     })
     return

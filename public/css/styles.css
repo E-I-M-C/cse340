@@ -316,7 +316,8 @@ input:focus:invalid {
 
 #updateForm input[type=submit],
 #deleteForm input[type=submit],
-#updatepsswrdForm input[type=submit] {
+#updatepsswrdForm input[type=submit],
+#deleteAccountForm input[type=submit] {
   width: 150px;
 }
 
@@ -348,6 +349,16 @@ div.management select {
 
 table.management {
   margin: 0.5rem auto auto 0;
+}
+
+#account-delete {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  width: 140px;
+  color: #fff;
+  background-color: #f00;
+  text-align: center;
+  border-radius: 0.5rem;
 }
 
 #messages {
@@ -488,6 +499,7 @@ footer p {
 
   .form-generic,
   .management,
+  #account-delete,
   .notice,
   #messages,
   #error-message {

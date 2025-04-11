@@ -197,11 +197,9 @@ async function updateAccount(req, res, next) {
     res.redirect("/account")
   } else {
     req.flash("notice", "Sorry, your information failed to update.")
-    console.log(account_id)
-    res.status(501).render("inventory/edit-inventory", {
-      title: "Edit " + itemName,
+    res.status(501).render("account/update-account", {
+      title: "Edit Account",
       nav,
-      classificationSelect: classificationSelect,
       errors: null,
       account_id,
       account_firstname,
@@ -253,4 +251,73 @@ async function accountLogout(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccount, editAccountView, updateAccount, changePassword, accountLogout }
+/* ****************************************
+*  Deliver delete account view
+* *************************************** */
+async function accountDeleteView(req, res, next) {
+  const account_id = parseInt(req.params.account_id)
+  if (account_id !== res.locals.accountData.account_id) {
+    req.flash("notice", `You are not permitted on that page.`)
+    res.redirect("/account")
+  }
+  let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
+  const accountData = await accountModel.getAccountById(account_id)
+  res.render("account/delete-account", {
+    title: "Delete Account",
+    nav,
+    errors: null,
+    account,
+    account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+  })
+}
+
+/* ***************************
+ *  Delete Account
+ * ************************** */
+async function deleteAccount(req, res, next) {
+  let nav = await utilities.getNav()
+  let account = utilities.buildAccountButton(res)
+  const {account_id, account_firstname, account_lastname, account_email} = req.body
+  const updateResult = await accountModel.deleteAccount(account_id)
+
+  if (updateResult) {
+    req.flash("kudos", `Your account has been successfully deleted.`)
+    try {
+      res.cookie("jwt", "", { httpOnly: true, maxAge: 0 })
+      return res.redirect("/")
+    } catch (error) {
+      req.flash("notice", "Couldn't log out.")
+      return res.redirect("/account")
+    }
+  } else {
+    req.flash("notice", "Sorry, your account failed to be deleted.")
+    res.status(501).render("account/delete-account", {
+      title: "Delete Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account
+    })
+  }
+}
+
+module.exports = {
+  buildLogin,
+  buildRegister,
+  registerAccount,
+  accountLogin,
+  buildAccount,
+  editAccountView,
+  updateAccount,
+  changePassword,
+  accountLogout,
+  accountDeleteView,
+  deleteAccount
+}
