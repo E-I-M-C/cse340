@@ -276,13 +276,36 @@ async function accountDeleteView(req, res, next) {
 }
 
 /* ***************************
- *  Delete Account
+ *  Proccess Delete Account
  * ************************** */
 async function deleteAccount(req, res, next) {
   let nav = await utilities.getNav()
   let account = utilities.buildAccountButton(res)
-  const {account_id, account_firstname, account_lastname, account_email} = req.body
-  const updateResult = await accountModel.deleteAccount(account_id)
+  const {account_id, account_firstname, account_lastname, account_email, account_password} = req.body
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  let updateResult
+
+  try {
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      delete accountData.account_password
+      updateResult = await accountModel.deleteAccount(account_id)
+    }
+    else {
+      req.flash("message notice", "Please check your credentials and try again.")
+      res.status(400).render("account/delete-account", {
+        title: "Delete Account",
+        nav,
+        errors: null,
+        account_id,
+        account_firstname,
+        account_lastname,
+        account_email,
+        account,
+      })
+    }
+  } catch (error) {
+    throw new Error('Access Forbidden')
+  }
 
   if (updateResult) {
     req.flash("kudos", `Your account has been successfully deleted.`)
